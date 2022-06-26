@@ -8,19 +8,19 @@ import reactor.core.publisher.Mono;
  * @author goldwood
  * @since 2022/6/25
  */
-public class OrderedFilter implements Filter, Ordered {
-    private final Filter delegate;
+public class OrderedGatewayFilter implements GatewayFilter, Ordered {
+    private final GatewayFilter delegate;
 
     private final int order;
 
-    public OrderedFilter(Filter delegate, int order) {
+    public OrderedGatewayFilter(GatewayFilter delegate, int order) {
         this.delegate = delegate;
         this.order = order;
     }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, FilterChain chain) {
-        return delegate.filter(exchange, chain);
+    public Mono<Void> exec(ServerWebExchange exchange, FilterChain chain) {
+        return delegate.exec(exchange, chain);
     }
 
     @Override

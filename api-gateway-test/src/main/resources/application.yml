@@ -1,0 +1,7 @@
+api:
+  gateway:
+    routes:
+      - group:
+          id: 1
+        routes:
+          - id: 11

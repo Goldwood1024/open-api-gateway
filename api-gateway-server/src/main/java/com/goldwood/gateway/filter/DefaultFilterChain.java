@@ -1,7 +1,7 @@
 package com.goldwood.gateway.filter;
 
-import com.goldwood.common.filter.Filter;
 import com.goldwood.common.filter.FilterChain;
+import com.goldwood.common.filter.GatewayFilter;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -14,9 +14,9 @@ import java.util.List;
 public class DefaultFilterChain implements FilterChain {
     private final int index;
 
-    private final List<Filter> filters;
+    private final List<GatewayFilter> filters;
 
-    public DefaultFilterChain(List<Filter> filters) {
+    public DefaultFilterChain(List<GatewayFilter> filters) {
         this.filters = filters;
         this.index = 0;
     }
@@ -26,7 +26,7 @@ public class DefaultFilterChain implements FilterChain {
         this.index = index;
     }
 
-    private List<Filter> getFilters() {
+    private List<GatewayFilter> getFilters() {
         return filters;
     }
 
@@ -34,9 +34,9 @@ public class DefaultFilterChain implements FilterChain {
     public Mono<Void> filter(ServerWebExchange exchange) {
         return Mono.defer(() -> {
             if (this.index < filters.size()) {
-                Filter filter = filters.get(this.index);
+                GatewayFilter filter = filters.get(this.index);
                 DefaultFilterChain chain = new DefaultFilterChain(this, this.index + 1);
-                return filter.filter(exchange, chain);
+                return filter.exec(exchange, chain);
             } else {
                 return Mono.empty();
             }

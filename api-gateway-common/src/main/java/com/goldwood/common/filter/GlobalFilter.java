@@ -9,5 +9,5 @@ import reactor.core.publisher.Mono;
  */
 public interface GlobalFilter {
 
-    Mono<Void> filter(ServerWebExchange exchange, FilterChain chain);
+    Mono<Void> doWorker(ServerWebExchange exchange, FilterChain chain);
 }

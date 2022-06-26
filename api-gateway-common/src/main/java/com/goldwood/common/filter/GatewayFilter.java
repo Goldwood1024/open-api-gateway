@@ -7,6 +7,7 @@ import reactor.core.publisher.Mono;
  * @author goldwood
  * @since 2022/6/25
  */
-public interface Filter {
-    Mono<Void> filter(ServerWebExchange exchange, FilterChain chain);
+public interface GatewayFilter {
+
+    Mono<Void> exec(ServerWebExchange exchange, FilterChain chain);
 }
